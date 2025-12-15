@@ -6,7 +6,8 @@ We will be using the [LJSpeech](https://keithito.com/LJ-Speech-Dataset/) dataset
 ## Training Tacotron2
 _tacotron2/train_taco.py_ script provides a complete Tacotron2 training pipeline using HuggingFace Accelerate for distributed and mixed-precision training. It loads preprocessed LJSpeech metadata, generates mel-spectrograms on the fly, and batches data using a length-aware sampler and custom collator. The Tacotron2 architecture is fully configurable—covering encoder/decoder layers, prenet/postnet settings, and attention mechanisms. During training, the model predicts both coarse and postnet-refined mel spectrograms as well as stop tokens, optimized using a combination of mel MSE, refined mel MSE, and BCE stop-token loss. The script performs gradient clipping, synchronized updates across devices, optional LR scheduling, and logs metrics to the console or Weights & Biases. It also evaluates on a validation set each epoch and saves mel/attention visualizations for inspection. Checkpoints are automatically stored throughout training, and a final checkpoint is written at the end of training for future inference or fine-tuning.
 
-![plot](./output/taco_loss.png)
+<img width="1236" height="774" alt="image" src="https://github.com/user-attachments/assets/3df41029-cf60-4985-b30d-b3b50fb8c9a6" />
+
 
 ## Training HIFIGAN
 We begin by training HiFiGAN on ground-truth LJSpeech audio using the same train/test split as in the Tacotron2 setup. This teaches the vocoder to reconstruct high-quality waveforms from real mel-spectrograms.
