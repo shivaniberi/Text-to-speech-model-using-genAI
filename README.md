@@ -11,12 +11,16 @@ _tacotron2/train_taco.py_ script provides a complete Tacotron2 training pipeline
 
 ## Training HIFIGAN
 We begin by training HiFiGAN on ground-truth LJSpeech audio using the same train/test split as in the Tacotron2 setup. This teaches the vocoder to reconstruct high-quality waveforms from real mel-spectrograms.
+<img width="1157" height="603" alt="image" src="https://github.com/user-attachments/assets/56ecbc4d-7ef4-43ed-bf44-4ff7f7eac028" />
+
 
 However, Tacotron2’s generated mels differ slightly from the ground truth, which can introduce a domain mismatch. To address this, we finetune HiFiGAN on Tacotron2-generated mel spectrograms while still targeting the original LJSpeech audio. This helps the vocoder better adapt to the characteristics and artifacts of Tacotron2 outputs.
 
 To prepare data for finetuning, we first run Tacotron2 in inference mode (teacher-forced) to generate mel-spectrograms for all samples and save them as NumPy arrays, refer  _save_taco_mels.py_
 
 These saved mels are then used to finetune HiFiGAN, closing the gap between ground-truth mel distributions and Tacotron2-generated mels. 
+<img width="1802" height="502" alt="image" src="https://github.com/user-attachments/assets/02fe1c18-05f0-40fe-adc0-795d1e6b1875" />
+
 
 ## Inference
 For evaluation, the _hifigan/inference.ipynb_ notebook demonstrates how Tacotron2 + HiFiGAN are combined to synthesize speech.
